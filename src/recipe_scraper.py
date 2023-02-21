@@ -1,6 +1,11 @@
+from typing import Any
 import requests
 
 from bs4 import BeautifulSoup
+
+# TODO here or in scraper, normalize strings (to lower etc.)
+def normalize_data(recipe: dict[str, Any]) -> dict[str, Any]:
+    pass
 
 
 class RecipeScraper:
@@ -12,7 +17,7 @@ class RecipeScraper:
     or pictures.
     """
 
-    DEFAULT_PARSER = "lxml"
+    _DEFAULT_PARSER = "lxml"
 
     def __init__(self, recipe_url: str):
         self.recipe_url = recipe_url
@@ -26,7 +31,7 @@ class RecipeScraper:
     def _extract_ingredients_details(
         self, recipe_text: str
     ) -> dict[str, str | list[str]]:
-        soup = BeautifulSoup(recipe_text, self.DEFAULT_PARSER)
+        soup = BeautifulSoup(recipe_text, self._DEFAULT_PARSER)
 
         portions: str = soup.select(".field-name-field-ilosc-porcji")[0].text.strip()
         ingredients_elements = soup.select_one(".field-name-field-skladniki").select(
@@ -36,10 +41,10 @@ class RecipeScraper:
 
         return {"portions": portions, "ingredients": ingredients}
 
-    def get_ingredients(self):
+    def get_recipe(self):
         recipe_text = self._get_recipe_page()
         ingredients_details = self._extract_ingredients_details(recipe_text)
-        # TODO refactor this, maybe move exract_ingredients_details to here
+        # TODO refactor this, maybe move extract_ingredients_details to here
         return ingredients_details
 
 
@@ -47,4 +52,5 @@ if __name__ == "__main__":
     scraper = RecipeScraper(
         "https://www.kwestiasmaku.com/kuchnia_polska/rosol/przepis.html"
     )
-    soup = scraper.get_ingredients()
+    soup = scraper.get_recipe()
+    print(soup)
