@@ -3,6 +3,7 @@ import requests
 
 from bs4 import BeautifulSoup
 
+
 # TODO here or in scraper, normalize strings (to lower etc.)
 def normalize_data(recipe: dict[str, Any]) -> dict[str, Any]:
     pass
