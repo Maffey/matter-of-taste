@@ -1,6 +1,7 @@
 import pytest
 
 from src.recipe_translator import RecipeTranslator
+from conftest import build_recipe
 
 
 @pytest.fixture
@@ -9,7 +10,7 @@ def recipe_translator():
 
 
 @pytest.mark.parametrize(
-    "portions, ingredients, expected_portions, expected_ingredients",
+    "servings, ingredients, expected_servings, expected_ingredients",
     [
         (
             "1 porcja",
@@ -20,16 +21,10 @@ def recipe_translator():
     ],
 )
 def test_recipe_is_properly_translated(
-    recipe_translator, portions, ingredients, expected_portions, expected_ingredients
+    recipe_translator, servings, ingredients, expected_servings, expected_ingredients
 ):
-    recipe = {
-        "portions": portions,
-        "ingredients": ingredients,
-    }
-    expected_recipe = {
-        "portions": expected_portions,
-        "ingredients": expected_ingredients,
-    }
+    recipe = build_recipe(servings, ingredients)
+    expected_recipe = build_recipe(expected_servings, expected_ingredients)
 
     translated_recipe = recipe_translator.translate_recipe_to_english(recipe)
 

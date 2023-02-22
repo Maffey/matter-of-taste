@@ -3,10 +3,9 @@ import requests
 
 from bs4 import BeautifulSoup
 
-
-# TODO here or in scraper, normalize strings (to lower etc.)
-def _normalize_data(recipe: dict[str, Any]) -> dict[str, Any]:
-    pass
+SERVINGS = "servings"
+INGREDIENTS = "ingredients"
+RecipeType = dict[str, str | list[str]]
 
 
 class RecipeScraper:
@@ -17,12 +16,10 @@ class RecipeScraper:
     and should not process any additional details, such as steps to create a recipe
     or pictures.
     """
-
     _DEFAULT_PARSER = "lxml"
 
     def __init__(self, recipe_url: str):
         self.recipe_url = recipe_url
-        self._ingredients = None
 
     def _get_recipe_page(self) -> str:
         try:
@@ -46,26 +43,32 @@ class RecipeScraper:
             print(f"HTTP error occurred with error: {http_error}.")
         # TODO stop execution if exception occurs
 
-    def _get_ingredients_details(self, recipe_text: str) -> None:
+    def _get_ingredients_details(self, recipe_text: str) -> RecipeType:
         soup = BeautifulSoup(recipe_text, self._DEFAULT_PARSER)
 
-        portions: str = soup.select(".field-name-field-ilosc-porcji")[0].text.strip()
+        servings: str = soup.select(".field-name-field-ilosc-porcji")[0].text.strip()
         ingredients_elements = soup.select_one(".field-name-field-skladniki").select(
             "li"
         )
         ingredients = [ingredient.text.strip() for ingredient in ingredients_elements]
 
-        self._ingredients = {"portions": portions, "ingredients": ingredients}
+        return {SERVINGS: servings, INGREDIENTS: ingredients}
 
-    def get_recipe(self) -> dict[str, str | list[str]]:
+    def get_recipe(self) -> RecipeType:
         recipe_text = self._get_recipe_page()
-        self._get_ingredients_details(recipe_text)
-        return self._ingredients
+        recipe = self._get_ingredients_details(recipe_text)
+        return recipe
+
+
+def normalize_recipe_data(recipe: RecipeType) -> RecipeType:
+    recipe[SERVINGS] = recipe[SERVINGS].strip().lower()
+    recipe[INGREDIENTS] = [ingredient.strip().lower() for ingredient in recipe[INGREDIENTS]]
+    return recipe
 
 
 if __name__ == "__main__":
     scraper = RecipeScraper(
         "https://www.kwestiasmaku.com/kuchnia_polska/rosol/przepis.html"
     )
-    recipe = scraper.get_recipe()
-    print(recipe)
+    scrapped_recipe = scraper.get_recipe()
+    print(scrapped_recipe)
