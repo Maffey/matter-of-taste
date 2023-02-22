@@ -1,3 +1,4 @@
+import sys
 from typing import Any
 import requests
 
@@ -5,7 +6,7 @@ from bs4 import BeautifulSoup
 
 
 # TODO here or in scraper, normalize strings (to lower etc.)
-def normalize_data(recipe: dict[str, Any]) -> dict[str, Any]:
+def _normalize_data(recipe: dict[str, Any]) -> dict[str, Any]:
     pass
 
 
@@ -29,6 +30,9 @@ class RecipeScraper:
             recipe_page = requests.get(self.recipe_url, timeout=1)
             # TODO check for error response codes
             return recipe_page.text
+
+        # TODO make messages consistent.
+        #  refactor using exception groups or just extract the error message printing.
         except requests.URLRequired as url_error:
             print(f"Problem with url. Error: {url_error}.")
         except requests.Timeout as timeout_error:
@@ -41,10 +45,9 @@ class RecipeScraper:
             print(f"Too many redirects with error {redirects_error}.")
         except requests.HTTPError as http_error:
             print(f"HTTP error occurred with error: {http_error}.")
+        # TODO stop execution if exception occurs
 
-    def _extract_ingredients_details(
-        self, recipe_text: str
-    ) -> dict[str, str | list[str]]:
+    def _get_ingredients_details(self, recipe_text: str) -> None:
         soup = BeautifulSoup(recipe_text, self._DEFAULT_PARSER)
 
         portions: str = soup.select(".field-name-field-ilosc-porcji")[0].text.strip()
@@ -53,18 +56,17 @@ class RecipeScraper:
         )
         ingredients = [ingredient.text.strip() for ingredient in ingredients_elements]
 
-        return {"portions": portions, "ingredients": ingredients}
+        self._ingredients = {"portions": portions, "ingredients": ingredients}
 
-    def get_recipe(self):
+    def get_recipe(self) -> dict[str, str | list[str]]:
         recipe_text = self._get_recipe_page()
-        ingredients_details = self._extract_ingredients_details(recipe_text)
-        # TODO refactor this, maybe move extract_ingredients_details to here
-        return ingredients_details
+        self._get_ingredients_details(recipe_text)
+        return self._ingredients
 
 
 if __name__ == "__main__":
     scraper = RecipeScraper(
         "https://www.kwestiasmaku.com/kuchnia_polska/rosol/przepis.html"
     )
-    soup = scraper.get_recipe()
-    print(soup)
+    recipe = scraper.get_recipe()
+    print(recipe)

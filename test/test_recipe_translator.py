@@ -3,19 +3,34 @@ import pytest
 from src.recipe_translator import RecipeTranslator
 
 
-def test_ingredients_are_properly_translated():
-    recipe_translator = RecipeTranslator()
-    polish_ingredients = {
-        "portions": "1 porcja",
-        "ingredients": ["1 kurczak", "wołowina", "woda"],
+@pytest.fixture
+def recipe_translator():
+    return RecipeTranslator()
+
+
+@pytest.mark.parametrize(
+    "portions, ingredients, expected_portions, expected_ingredients",
+    [
+        (
+            "1 porcja",
+            ["1 kurczak", "wołowina", "woda"],
+            "1 serving",
+            ["1 chicken", "bovine meat", "water"],
+        )
+    ],
+)
+def test_recipe_is_properly_translated(
+    recipe_translator, portions, ingredients, expected_portions, expected_ingredients
+):
+    recipe = {
+        "portions": portions,
+        "ingredients": ingredients,
     }
-    expected_ingredients = {
-        "portions": "1 serving",
-        "ingredients": ["1 chicken", "bovine meat", "water"],
+    expected_recipe = {
+        "portions": expected_portions,
+        "ingredients": expected_ingredients,
     }
 
-    english_ingredients = recipe_translator.translate_recipe_to_english(
-        polish_ingredients
-    )
+    translated_recipe = recipe_translator.translate_recipe_to_english(recipe)
 
-    assert english_ingredients == expected_ingredients
+    assert translated_recipe == expected_recipe
