@@ -1,5 +1,3 @@
-import pytest
-
 from src.recipe_scraper import SERVINGS, INGREDIENTS, RecipeType
 
 

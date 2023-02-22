@@ -19,9 +19,7 @@ class RecipeTranslator:
         )
         recipe[SERVINGS] = translator.translate(recipe[SERVINGS])
         translated_ingredients = [
-            translator.translate(ingredient)
-            for ingredient in recipe[INGREDIENTS]
+            translator.translate(ingredient) for ingredient in recipe[INGREDIENTS]
         ]
         recipe[INGREDIENTS] = translated_ingredients
         return normalize_recipe_data(recipe)
-

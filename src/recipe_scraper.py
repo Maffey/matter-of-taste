@@ -16,6 +16,7 @@ class RecipeScraper:
     and should not process any additional details, such as steps to create a recipe
     or pictures.
     """
+
     _DEFAULT_PARSER = "lxml"
 
     def __init__(self, recipe_url: str):
@@ -62,7 +63,9 @@ class RecipeScraper:
 
 def normalize_recipe_data(recipe: RecipeType) -> RecipeType:
     recipe[SERVINGS] = recipe[SERVINGS].strip().lower()
-    recipe[INGREDIENTS] = [ingredient.strip().lower() for ingredient in recipe[INGREDIENTS]]
+    recipe[INGREDIENTS] = [
+        ingredient.strip().lower() for ingredient in recipe[INGREDIENTS]
+    ]
     return recipe
 
 

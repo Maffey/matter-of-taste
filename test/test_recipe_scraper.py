@@ -1,6 +1,6 @@
 import pytest
 
-from src.recipe_scraper import  normalize_recipe_data
+from src.recipe_scraper import normalize_recipe_data
 from conftest import build_recipe
 
 
