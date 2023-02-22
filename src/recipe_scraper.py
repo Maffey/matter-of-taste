@@ -25,9 +25,22 @@ class RecipeScraper:
         self._ingredients = None
 
     def _get_recipe_page(self) -> str:
-        recipe_page = requests.get(self.recipe_url)
-        # TODO check for error response codes
-        return recipe_page.text
+        try:
+            recipe_page = requests.get(self.recipe_url, timeout=1)
+            # TODO check for error response codes
+            return recipe_page.text
+        except requests.URLRequired as url_error:
+            print(f"Problem with url. Error: {url_error}.")
+        except requests.Timeout as timeout_error:
+            print(f"Request or server response timeout. Error: {timeout_error}.")
+        except ConnectionError as connection_error:
+            print(
+                f"There have been problems with connection to the site with error {connection_error}."
+            )
+        except requests.TooManyRedirects as redirects_error:
+            print(f"Too many redirects with error {redirects_error}.")
+        except requests.HTTPError as http_error:
+            print(f"HTTP error occurred with error: {http_error}.")
 
     def _extract_ingredients_details(
         self, recipe_text: str
