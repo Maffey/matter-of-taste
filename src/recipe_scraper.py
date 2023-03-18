@@ -24,9 +24,11 @@ class RecipeScraper:
 
     def _get_recipe_page(self) -> str:
         try:
-            recipe_page = requests.get(self.recipe_url, timeout=1)
-            # TODO check for error response codes
-            return recipe_page.text
+            recipe_page_response = requests.get(self.recipe_url, timeout=1)
+            if recipe_page_response.status_code == requests.codes.ok:
+                return recipe_page_response.text
+            else:
+                raise ConnectionError
 
         except* (RequestException, ConnectionError) as request_error:
             print(f"Error while trying to connect to the website.\n{request_error}")
