@@ -1,7 +1,7 @@
 from typing import Any
 from translate import Translator
 
-from src.recipe_scraper import SERVINGS, INGREDIENTS, normalize_recipe_data
+from src.recipe import Recipe
 
 
 # TODO needs to:
@@ -13,13 +13,12 @@ class RecipeTranslator:
     _POLISH_LOCALE = "pl"
     _ENGLISH_LOCALE = "en"
 
-    def translate_recipe_to_english(self, recipe: dict[str, Any]) -> dict[str, Any]:
+    def translate_recipe_to_english(self, recipe: Recipe) -> Recipe:
         translator = Translator(
             from_lang=self._POLISH_LOCALE, to_lang=self._ENGLISH_LOCALE
         )
-        recipe[SERVINGS] = translator.translate(recipe[SERVINGS])
-        translated_ingredients = [
-            translator.translate(ingredient) for ingredient in recipe[INGREDIENTS]
+        recipe.servings = translator.translate(recipe.servings)
+        recipe.ingredients = [
+            translator.translate(ingredient) for ingredient in recipe.ingredients
         ]
-        recipe[INGREDIENTS] = translated_ingredients
-        return normalize_recipe_data(recipe)
+        return recipe

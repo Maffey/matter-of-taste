@@ -3,9 +3,7 @@ import requests
 
 from bs4 import BeautifulSoup
 
-SERVINGS = "servings"
-INGREDIENTS = "ingredients"
-RecipeType = dict[str, str | list[str]]
+from src.recipe import Recipe
 
 
 class RecipeScraper:
@@ -44,7 +42,7 @@ class RecipeScraper:
             print(f"HTTP error occurred with error: {http_error}.")
         # TODO stop execution if exception occurs
 
-    def _get_ingredients_details(self, recipe_text: str) -> RecipeType:
+    def _get_ingredients_details(self, recipe_text: str) -> Recipe:
         soup = BeautifulSoup(recipe_text, self._DEFAULT_PARSER)
 
         servings: str = soup.select(".field-name-field-ilosc-porcji")[0].text.strip()
@@ -53,20 +51,12 @@ class RecipeScraper:
         )
         ingredients = [ingredient.text.strip() for ingredient in ingredients_elements]
 
-        return {SERVINGS: servings, INGREDIENTS: ingredients}
+        return Recipe(servings, ingredients)
 
-    def get_recipe(self) -> RecipeType:
+    def get_recipe(self) -> Recipe:
         recipe_text = self._get_recipe_page()
         recipe = self._get_ingredients_details(recipe_text)
         return recipe
-
-
-def normalize_recipe_data(recipe: RecipeType) -> RecipeType:
-    recipe[SERVINGS] = recipe[SERVINGS].strip().lower()
-    recipe[INGREDIENTS] = [
-        ingredient.strip().lower() for ingredient in recipe[INGREDIENTS]
-    ]
-    return recipe
 
 
 if __name__ == "__main__":
