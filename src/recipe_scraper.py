@@ -1,6 +1,9 @@
+import sys
+
 import requests
 
 from bs4 import BeautifulSoup
+from requests import RequestException
 
 from src.recipe import Recipe
 
@@ -25,22 +28,9 @@ class RecipeScraper:
             # TODO check for error response codes
             return recipe_page.text
 
-        # TODO make messages consistent.
-        #  refactor using exception groups or just extract the error message printing.
-        except requests.URLRequired as url_error:
-            print(f"Problem with url. Error: {url_error}.")
-        except requests.Timeout as timeout_error:
-            print(f"Request or server response timeout. Error: {timeout_error}.")
-        except ConnectionError as connection_error:
-            print(
-                f"There have been problems with connection "
-                f"to the site with error {connection_error}."
-            )
-        except requests.TooManyRedirects as redirects_error:
-            print(f"Too many redirects with error {redirects_error}.")
-        except requests.HTTPError as http_error:
-            print(f"HTTP error occurred with error: {http_error}.")
-        # TODO stop execution if exception occurs
+        except* (RequestException, ConnectionError) as request_error:
+            print(f"Error while trying to connect to the website.\n{request_error}")
+            sys.exit(1)
 
     def _get_ingredients_details(self, recipe_text: str) -> Recipe:
         soup = BeautifulSoup(recipe_text, self._DEFAULT_PARSER)

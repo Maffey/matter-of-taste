@@ -1,8 +1,20 @@
 from dataclasses import dataclass
+from typing import Any
 
 
 @dataclass
-class Recipe:
+class BaseRecipe:
+    servings: Any
+    ingredients: Any
+
+    def __eq__(self, other):
+        return bool(
+            self.servings == other.servings and self.ingredients == other.ingredients
+        )
+
+
+@dataclass
+class Recipe(BaseRecipe):
     servings: str
     ingredients: list[str]
 
@@ -13,7 +25,8 @@ class Recipe:
             ingredient.strip().lower() for ingredient in self.ingredients
         ]
 
-    def __eq__(self, other):
-        return bool(
-            self.servings == other.servings and self.ingredients == other.ingredients
-        )
+
+@dataclass
+class TokenizedRecipe(BaseRecipe):
+    servings: list[str]
+    ingredients: list[list[str]]

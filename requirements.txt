@@ -4,3 +4,5 @@ lxml
 pytest
 translate
 black
+flake8
+nltk
