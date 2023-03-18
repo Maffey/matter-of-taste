@@ -19,6 +19,7 @@ def recipe_translator():
     ],
 )
 def test_recipe_is_properly_translated(recipe_translator, recipe, expected_recipe):
-    # This test might be brittle. "Wołowina" can be translated to either "beef" or "bovine meat".
+    # This test might be brittle.
+    # "Wołowina" can be translated to either "beef" or "bovine meat".
     translated_recipe = recipe_translator.translate_recipe_to_english(recipe)
     assert translated_recipe == expected_recipe

@@ -1,4 +1,3 @@
-from typing import Any
 import requests
 
 from bs4 import BeautifulSoup
@@ -34,7 +33,8 @@ class RecipeScraper:
             print(f"Request or server response timeout. Error: {timeout_error}.")
         except ConnectionError as connection_error:
             print(
-                f"There have been problems with connection to the site with error {connection_error}."
+                f"There have been problems with connection "
+                f"to the site with error {connection_error}."
             )
         except requests.TooManyRedirects as redirects_error:
             print(f"Too many redirects with error {redirects_error}.")

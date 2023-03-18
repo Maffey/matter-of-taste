@@ -14,4 +14,6 @@ class Recipe:
         ]
 
     def __eq__(self, other):
-        return bool(self.servings == other.servings and self.ingredients == other.ingredients)
+        return bool(
+            self.servings == other.servings and self.ingredients == other.ingredients
+        )

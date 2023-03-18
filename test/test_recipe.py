@@ -14,7 +14,9 @@ from src.recipe import Recipe
         )
     ],
 )
-def test_recipe_data_is_normalized(servings, ingredients, expected_servings, expected_ingredients):
+def test_recipe_data_is_normalized(
+    servings, ingredients, expected_servings, expected_ingredients
+):
     recipe = Recipe(servings, ingredients)
 
     assert recipe.servings == expected_servings
