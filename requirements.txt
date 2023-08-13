@@ -7,4 +7,4 @@ black
 flake8
 nltk
 python-dotenv
-
+dacite
