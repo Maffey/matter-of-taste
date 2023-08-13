@@ -1,6 +1,6 @@
 import pytest
 
-from src.recipe import Recipe
+from src.models.recipe import Recipe
 
 
 @pytest.mark.parametrize(

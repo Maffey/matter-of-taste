@@ -1,7 +1,7 @@
 import nltk
 from translate import Translator
 
-from src.recipe import Recipe, TokenizedRecipe
+from src.models.recipe import Recipe, TokenizedRecipe
 
 nltk.download("punkt")
 nltk.download("stopwords")

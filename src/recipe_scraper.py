@@ -5,7 +5,7 @@ import requests
 from bs4 import BeautifulSoup
 from requests import RequestException
 
-from src.recipe import Recipe
+from src.models.recipe import Recipe
 
 
 class RecipeScraper:
