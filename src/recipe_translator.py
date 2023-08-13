@@ -53,4 +53,7 @@ def tokenize_recipe(recipe: Recipe) -> TokenizedRecipe:
 
 
 def drop_punctuation_from_ingredients(recipe: Recipe) -> None:
-    recipe.ingredients = [ingredient.translate(str.maketrans('', '', string.punctuation)) for ingredient in recipe.ingredients]
+    recipe.ingredients = [
+        ingredient.translate(str.maketrans("", "", string.punctuation))
+        for ingredient in recipe.ingredients
+    ]
