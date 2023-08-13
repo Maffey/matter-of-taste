@@ -19,4 +19,5 @@ class CaloriesCalculator:
             return response.text
         else:
             print("Error:", response.status_code, response.text)
+            return "Error while trying to fetch nutrition information."
     
