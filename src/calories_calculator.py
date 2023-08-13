@@ -37,5 +37,5 @@ class CaloriesCalculator:
 
 
 if __name__ == "__main__":
-    nutrition_info = CaloriesCalculator.get_nutrition_information("banana")
+    nutrition_info = CaloriesCalculator.get_nutrition_information("chicken, beef and water")
     print(nutrition_info)
