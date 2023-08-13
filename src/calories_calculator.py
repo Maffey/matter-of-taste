@@ -1,7 +1,11 @@
 import os
 
+import dacite
 import requests
 from dotenv import load_dotenv, find_dotenv
+from requests import Response
+
+from src.models.nutrition_result import NutritionResult
 
 # TODO https://api-ninjas.com/api/nutrition
 #  If this works smoothly, NLP can be ditched, as this uses it anyway.
@@ -16,13 +20,20 @@ class CaloriesCalculator:
     _ERROR_NUTRITION_INFORMATION = "ERROR"
 
     @classmethod
-    def get_nutrition_information(cls, query: str) -> str:
+    def get_nutrition_information(cls, query: str) -> list[NutritionResult]:
         response = requests.get(cls._API_URL.format(query), headers=cls._API_HEADERS)
         if response.status_code == requests.codes.ok:
-            return response.text
+            return cls._process_nutritions(response)
         else:
             print("Error:", response.status_code, response.text)
-            return cls._ERROR_NUTRITION_INFORMATION
+            return []
+
+    @staticmethod
+    def _process_nutritions(response: Response) -> list[NutritionResult]:
+        ingredients = response.json()
+        return [
+            dacite.from_dict(NutritionResult, nutrition) for nutrition in ingredients
+        ]
 
 
 if __name__ == "__main__":
