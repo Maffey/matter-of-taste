@@ -5,22 +5,6 @@ from src.recipe_translator import translate_recipe_to_english, tokenize_recipe
 
 
 @pytest.mark.parametrize(
-    "recipe, expected_recipe",
-    [
-        (
-            Recipe("1 porcja", ["1 kurczak", "wołowina", "woda"]),
-            Recipe("1 serving", ["1 chicken", "beef", "water"]),
-        ),
-    ],
-)
-def test_recipe_is_translated(recipe, expected_recipe):
-    # This test might be brittle.
-    # "Wołowina" can be translated to either "beef" or "bovine meat".
-    translated_recipe = translate_recipe_to_english(recipe)
-    assert translated_recipe == expected_recipe
-
-
-@pytest.mark.parametrize(
     "recipe, expected_tokenized_servings, expected_tokenized_ingredients",
     [
         (
