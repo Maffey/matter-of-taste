@@ -23,13 +23,13 @@ class CaloriesCalculator:
     def get_nutrition_information(cls, query: str) -> list[NutritionResult]:
         response = requests.get(cls._API_URL.format(query), headers=cls._API_HEADERS)
         if response.status_code == requests.codes.ok:
-            return cls._process_nutritions(response)
+            return cls._process_nutrition(response)
         else:
             print("Error:", response.status_code, response.text)
             return []
 
     @staticmethod
-    def _process_nutritions(response: Response) -> list[NutritionResult]:
+    def _process_nutrition(response: Response) -> list[NutritionResult]:
         ingredients = response.json()
         return [
             dacite.from_dict(NutritionResult, nutrition) for nutrition in ingredients
@@ -37,5 +37,7 @@ class CaloriesCalculator:
 
 
 if __name__ == "__main__":
-    nutrition_info = CaloriesCalculator.get_nutrition_information("banana")
+    nutrition_info = CaloriesCalculator.get_nutrition_information(
+        "chicken, beef and water"
+    )
     print(nutrition_info)
