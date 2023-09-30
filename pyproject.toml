@@ -9,7 +9,7 @@ packages = [{include = "matter_of_taste"}]
 
 [tool.poetry.dependencies]
 python = "^3.10"
-requests = "^2.28.1"
+requests = "^2.31.0"
 bs4 = "^0.0.1"
 lxml = "^4.9.2"
 pytest = "^7.2.1"
