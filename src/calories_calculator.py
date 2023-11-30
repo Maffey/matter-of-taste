@@ -7,9 +7,6 @@ from requests import Response
 
 from src.models.nutrition_result import NutritionResult
 
-# TODO https://api-ninjas.com/api/nutrition
-#  If this works smoothly, NLP can be ditched, as this uses it anyway.
-
 load_dotenv(find_dotenv())
 
 
@@ -34,3 +31,10 @@ class CaloriesCalculator:
         return [
             dacite.from_dict(NutritionResult, nutrition) for nutrition in ingredients
         ]
+
+
+if __name__ == "__main__":
+    nutrition_info = CaloriesCalculator.get_nutrition_information(
+        "chicken, beef and water"
+    )
+    print(nutrition_info)
