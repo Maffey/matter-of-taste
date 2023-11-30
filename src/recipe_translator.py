@@ -32,7 +32,7 @@ def translate_recipe_to_english(recipe: Recipe) -> Recipe:
 
 def tokenize_recipe(recipe: Recipe) -> TokenizedRecipe:
     word_tokens_servings = nltk.word_tokenize(recipe.servings)
-    drop_punctuation_from_ingredients(recipe)
+    _drop_punctuation_from_ingredients(recipe)
     word_tokens_ingredients = [
         nltk.word_tokenize(ingredient) for ingredient in recipe.ingredients
     ]
@@ -52,7 +52,7 @@ def tokenize_recipe(recipe: Recipe) -> TokenizedRecipe:
     )
 
 
-def drop_punctuation_from_ingredients(recipe: Recipe) -> None:
+def _drop_punctuation_from_ingredients(recipe: Recipe) -> None:
     recipe.ingredients = [
         ingredient.translate(str.maketrans("", "", string.punctuation))
         for ingredient in recipe.ingredients

@@ -37,6 +37,7 @@ class RecipeScraper:
     def _get_ingredients_details(self, recipe_text: str) -> Recipe:
         soup = BeautifulSoup(recipe_text, self._DEFAULT_PARSER)
 
+        # TODO list index out of range
         servings: str = soup.select(".field-name-field-ilosc-porcji")[0].text.strip()
         ingredients_elements = soup.select_one(".field-name-field-skladniki").select(
             "li"
