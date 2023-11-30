@@ -34,10 +34,3 @@ class CaloriesCalculator:
         return [
             dacite.from_dict(NutritionResult, nutrition) for nutrition in ingredients
         ]
-
-
-if __name__ == "__main__":
-    nutrition_info = CaloriesCalculator.get_nutrition_information(
-        "chicken, beef and water"
-    )
-    print(nutrition_info)
