@@ -2,7 +2,7 @@ from dataclasses import dataclass
 
 
 @dataclass
-class NutritionResult:
+class NutritionInformation:
     name: str
     calories: float
     carbohydrates_total_g: float
@@ -10,8 +10,8 @@ class NutritionResult:
     fat_total_g: float
     protein_g: float
 
-    def __add__(self, other: "NutritionResult") -> "NutritionResult":
-        return NutritionResult(
+    def __add__(self, other: "NutritionInformation") -> "NutritionInformation":
+        return NutritionInformation(
             name="sum",
             calories=self.calories + other.calories,
             carbohydrates_total_g=self.carbohydrates_total_g
@@ -21,7 +21,7 @@ class NutritionResult:
             protein_g=self.protein_g + other.protein_g,
         )
 
-    def __iadd__(self, other: "NutritionResult") -> "NutritionResult":
+    def __iadd__(self, other: "NutritionInformation") -> "NutritionInformation":
         self.calories += other.calories
         self.carbohydrates_total_g += other.carbohydrates_total_g
         self.sugar_g += other.sugar_g
@@ -31,7 +31,7 @@ class NutritionResult:
 
 
 def get_empty_nutrition_result(name: str):
-    return NutritionResult(
+    return NutritionInformation(
         name=name,
         calories=0.0,
         carbohydrates_total_g=0.0,

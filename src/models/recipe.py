@@ -28,5 +28,5 @@ class Recipe(BaseRecipe):
 
 @dataclass
 class TokenizedRecipe(BaseRecipe):
-    servings: list[str]
-    ingredients: list[list[str]]
+    servings: str
+    ingredients: list[str]

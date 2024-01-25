@@ -37,14 +37,14 @@ def tokenize_recipe(recipe: Recipe) -> TokenizedRecipe:
         nltk.word_tokenize(ingredient) for ingredient in recipe.ingredients
     ]
     stop_words = set(nltk.corpus.stopwords.words("english"))
-    filtered_word_tokens_servings = [
-        word for word in word_tokens_servings if word.casefold() not in stop_words
-    ]
+    filtered_word_tokens_servings = " ".join(
+        [word for word in word_tokens_servings if word.casefold() not in stop_words]
+    )
     filtered_tokenized_ingredients = []
     for ingredient in word_tokens_ingredients:
-        ingredient_tokens = [
-            word for word in ingredient if word.casefold() not in stop_words
-        ]
+        ingredient_tokens = " ".join(
+            [word for word in ingredient if word.casefold() not in stop_words]
+        )
         filtered_tokenized_ingredients.append(ingredient_tokens)
 
     return TokenizedRecipe(

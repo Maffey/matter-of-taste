@@ -5,7 +5,7 @@ import requests
 from dotenv import load_dotenv, find_dotenv
 from requests import Response
 
-from src.models.nutrition_result import NutritionResult
+from src.models.nutrition_result import NutritionInformation
 
 load_dotenv(find_dotenv())
 
@@ -17,7 +17,7 @@ class CaloriesCalculator:
     _ERROR_NUTRITION_INFORMATION = "ERROR"
 
     @classmethod
-    def get_nutrition_information(cls, query: str) -> list[NutritionResult]:
+    def get_nutrition_information(cls, query: str) -> list[NutritionInformation]:
         response = requests.get(cls._API_URL.format(query), headers=cls._API_HEADERS)
         if response.status_code == requests.codes.ok:
             return cls._process_nutrition(response)
@@ -26,10 +26,11 @@ class CaloriesCalculator:
             return []
 
     @staticmethod
-    def _process_nutrition(response: Response) -> list[NutritionResult]:
+    def _process_nutrition(response: Response) -> list[NutritionInformation]:
         ingredients = response.json()
         return [
-            dacite.from_dict(NutritionResult, nutrition) for nutrition in ingredients
+            dacite.from_dict(NutritionInformation, nutrition)
+            for nutrition in ingredients
         ]
 
 
