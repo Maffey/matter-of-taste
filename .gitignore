@@ -133,3 +133,6 @@ output/
 
 # Pycharm folder
 .idea/
+
+# pre-commit script
+/hooks/pre-commit
