@@ -59,6 +59,7 @@ def _convert_servings_to_number(tokenized_servings: str) -> int:
     found_numbers = re.findall(r"\d+", tokenized_servings)
     if found_numbers and len(found_numbers) == 1:
         return int(found_numbers[0])
+    # TODO 6-8 porcji: https://www.kwestiasmaku.com/pasta/lasagne_bolognese/przepis.html
     raise TooManyNumbersDetectedException
 
 
@@ -66,6 +67,7 @@ def main():
     # url = "https://www.kwestiasmaku.com/dania_dla_dwojga/kanapki/kanapka_klubowa/przepis.html"
     # url = "https://www.kwestiasmaku.com/kuchnia_polska/rosol/przepis.html"
     url = "https://www.kwestiasmaku.com/zielony_srodek/marchewka/makaron_ryzowy_marchewka_tofu/przepis.html"
+    url = "https://www.kwestiasmaku.com/pasta/lasagne_bolognese/przepis.html"
     tokenized_recipe = _extract_recipe_data_from_url(url)
     servings, nutrition_summary, nutrition_data = _get_nutrition_data(tokenized_recipe)
     main_logger.debug(f"{nutrition_data=}")
