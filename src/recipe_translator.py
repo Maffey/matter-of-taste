@@ -18,6 +18,12 @@ _ENGLISH_LOCALE = "en"
 _STOP_WORDS = set(nltk.corpus.stopwords.words("english"))
 
 
+def install_nltk_modules() -> None:
+    nltk.download("punkt")
+    nltk.download("stopwords")
+    nltk.download("corpus")
+
+
 def translate_recipe_to_english(recipe: Recipe) -> Recipe:
     translator = Translator(from_lang=_POLISH_LOCALE, to_lang=_ENGLISH_LOCALE)
     if recipe.servings:
@@ -62,10 +68,3 @@ def _drop_punctuation_from_ingredients(recipe: Recipe) -> None:
         ingredient.translate(str.maketrans("", "", string.punctuation))
         for ingredient in recipe.ingredients
     ]
-
-
-if __name__ == "__main__":
-    # Use this to install required dependencies for nltk
-    nltk.download("punkt")
-    nltk.download("stopwords")
-    nltk.download("corpus")
