@@ -7,12 +7,16 @@ from src.calories_calculator import CaloriesCalculator
 from src.models.nutrition_report import NutritionReport
 from src.models.nutrition_result import NutritionInformation, get_empty_nutrition_result
 from src.models.recipe import TokenizedRecipe
+from src.models.servings import ServingsStrategy
 from src.recipe_scraper import RecipeScraper
 from src.recipe_translator import translate_recipe_to_english, tokenize_recipe
 
 process_logger = logging.getLogger(__name__)
 
 _API_CALLS_DELAY = 0.1
+
+_NUMBER_REGEX = r"\d+"
+_RANGE_OF_NUMBERS_REGEX = r"(\d+)\s*[-–]\s*(\d+)"
 
 
 class TooManyNumbersDetectedException(Exception):
@@ -70,16 +74,33 @@ def get_nutrition_data(
         time.sleep(_API_CALLS_DELAY)
 
     servings = (
-        _convert_servings_to_number(tokenized_recipe.servings)
+        _convert_servings_to_number(
+            tokenized_recipe.servings, ServingsStrategy.FEWER_SERVINGS
+        )  # TODO pass correct strategy
         if tokenized_recipe.servings
         else None
     )
     return servings, summarized_nutrition_info, all_nutrition_information
 
 
-def _convert_servings_to_number(tokenized_servings: str) -> int:
-    found_numbers = re.findall(r"\d+", tokenized_servings)
-    if found_numbers and len(found_numbers) == 1:
-        return int(found_numbers[0])
-    # TODO #14 - BUG 6-8 porcji: https://www.kwestiasmaku.com/pasta/lasagne_bolognese/przepis.html
+def _convert_servings_to_number(
+    tokenized_servings: str, servings_strategy: ServingsStrategy
+) -> int:
+    found_numbers = re.findall(_NUMBER_REGEX, tokenized_servings)
+    match len(found_numbers):
+        case 1:
+            return int(found_numbers[0])
+        case 2:
+            # TODO find if servings create a range
+            numbers_range = re.search(_RANGE_OF_NUMBERS_REGEX, tokenized_servings)
+            if numbers_range:
+                fewer_portions, more_portions = (
+                    int(number) for number in numbers_range.groups()
+                )
+                return (
+                    fewer_portions
+                    if servings_strategy is ServingsStrategy.FEWER_SERVINGS
+                    else more_portions
+                )
+
     raise TooManyNumbersDetectedException
