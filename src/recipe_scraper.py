@@ -20,11 +20,12 @@ class RecipeScraper:
     _DEFAULT_PARSER = "lxml"
 
     def __init__(self, recipe_url: str):
-        self.recipe_url = recipe_url
+        self._recipe_url = recipe_url
+        self._recipe_page = BeautifulSoup(self._get_recipe_page(), self._DEFAULT_PARSER)
 
     def _get_recipe_page(self) -> str:
         try:
-            recipe_page_response = requests.get(self.recipe_url, timeout=1)
+            recipe_page_response = requests.get(self._recipe_url, timeout=1)
             if recipe_page_response.status_code == requests.codes.ok:
                 return recipe_page_response.text
             else:
@@ -34,22 +35,20 @@ class RecipeScraper:
             print(f"Error while trying to connect to the website.\n{request_error}")
             sys.exit(1)
 
-    def _get_ingredients_details(self, recipe_text: str) -> Recipe:
-        soup = BeautifulSoup(recipe_text, self._DEFAULT_PARSER)
-
-        # TODO list index out of range
-        servings: str = soup.select(".field-name-field-ilosc-porcji")[0].text.strip()
-        ingredients_elements = soup.select_one(".field-name-field-skladniki").select(
-            "li"
-        )
+    def get_recipe(self) -> Recipe:
+        # TODO BUG list index out of range https://www.kwestiasmaku.com/dania_dla_dwojga/kanapki/kanapka_klubowa/przepis.html
+        servings: str = self._recipe_page.select_one(
+            ".field-name-field-ilosc-porcji"
+        ).text.strip()
+        ingredients_elements = self._recipe_page.select_one(
+            ".field-name-field-skladniki"
+        ).select("li")
         ingredients = [ingredient.text.strip() for ingredient in ingredients_elements]
 
         return Recipe(servings, ingredients)
 
-    def get_recipe(self) -> Recipe:
-        recipe_text = self._get_recipe_page()
-        recipe = self._get_ingredients_details(recipe_text)
-        return recipe
+    def get_recipe_title(self):
+        return self._recipe_page.select_one(".przepis").text.strip()
 
 
 if __name__ == "__main__":
