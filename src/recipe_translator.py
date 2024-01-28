@@ -5,16 +5,14 @@ from translate import Translator
 
 from src.models.recipe import Recipe, TokenizedRecipe
 
+nltk.download("punkt")
+nltk.download("stopwords")
+nltk.download("corpus")
+
 _POLISH_LOCALE = "pl"
 _ENGLISH_LOCALE = "en"
 
 _STOP_WORDS = set(nltk.corpus.stopwords.words("english"))
-
-
-def install_nltk_modules() -> None:
-    nltk.download("punkt")
-    nltk.download("stopwords")
-    nltk.download("corpus")
 
 
 def translate_recipe_to_english(recipe: Recipe) -> Recipe:

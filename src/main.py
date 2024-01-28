@@ -1,7 +1,6 @@
 import logging
 
 from src.data_gathering import prepare_nutrition_report
-from src.recipe_translator import install_nltk_modules
 
 logging.basicConfig(
     encoding="utf-8",
@@ -21,5 +20,4 @@ def main():
 
 
 if __name__ == "__main__":
-    install_nltk_modules()
     main()
