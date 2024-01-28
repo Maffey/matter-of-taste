@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from typing import Optional
 
 from src.models.nutrition_result import NutritionInformation
 
@@ -7,6 +8,6 @@ from src.models.nutrition_result import NutritionInformation
 class NutritionReport:
     recipe_name: str
     url: str
-    servings: int
+    servings: Optional[int]
     summary: NutritionInformation
     ingredients: list[NutritionInformation]

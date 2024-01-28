@@ -37,9 +37,8 @@ class RecipeScraper:
 
     def get_recipe(self) -> Recipe:
         # TODO BUG list index out of range https://www.kwestiasmaku.com/dania_dla_dwojga/kanapki/kanapka_klubowa/przepis.html
-        servings: str = self._recipe_page.select_one(
-            ".field-name-field-ilosc-porcji"
-        ).text.strip()
+        servings_tag = self._recipe_page.select_one(".field-name-field-ilosc-porcji")
+        servings = servings_tag.text.strip() if servings_tag else None
         ingredients_elements = self._recipe_page.select_one(
             ".field-name-field-skladniki"
         ).select("li")

@@ -1,6 +1,7 @@
 import logging
 import re
 import time
+from typing import Optional
 
 from src.calories_calculator import CaloriesCalculator
 from src.models.nutrition_report import NutritionReport
@@ -50,7 +51,7 @@ def extract_recipe_data_from_url(url: str) -> tuple[str, TokenizedRecipe]:
 
 def get_nutrition_data(
     tokenized_recipe: TokenizedRecipe,
-) -> tuple[int, NutritionInformation, list[NutritionInformation]]:
+) -> tuple[Optional[int], NutritionInformation, list[NutritionInformation]]:
     all_nutrition_information: list[NutritionInformation] = []
     summarized_nutrition_info: NutritionInformation = get_empty_nutrition_result(
         "Summary"
@@ -68,7 +69,11 @@ def get_nutrition_data(
 
         time.sleep(_API_CALLS_DELAY)
 
-    servings = _convert_servings_to_number(tokenized_recipe.servings)
+    servings = (
+        _convert_servings_to_number(tokenized_recipe.servings)
+        if tokenized_recipe.servings
+        else None
+    )
     return servings, summarized_nutrition_info, all_nutrition_information
 
 
