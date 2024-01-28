@@ -27,10 +27,14 @@ class TooManyNumbersDetectedException(Exception):
         )
 
 
-def prepare_nutrition_report(url: str) -> NutritionReport:
+def prepare_nutrition_report(
+    url: str, servings_strategy: ServingsStrategy
+) -> NutritionReport:
     process_logger.info("Preparing nutrition report...")
     title, recipe = extract_recipe_data_from_url(url)
-    servings, nutrition_summary, nutrition_data = get_nutrition_data(recipe)
+    servings, nutrition_summary, nutrition_data = get_nutrition_data(
+        recipe, servings_strategy
+    )
     process_logger.debug(f"{nutrition_data=}")
     process_logger.info("Report is finished.")
     return NutritionReport(
@@ -54,7 +58,7 @@ def extract_recipe_data_from_url(url: str) -> tuple[str, TokenizedRecipe]:
 
 
 def get_nutrition_data(
-    tokenized_recipe: TokenizedRecipe,
+    tokenized_recipe: TokenizedRecipe, servings_strategy: ServingsStrategy
 ) -> tuple[Optional[int], NutritionInformation, list[NutritionInformation]]:
     all_nutrition_information: list[NutritionInformation] = []
     summarized_nutrition_info: NutritionInformation = get_empty_nutrition_result(
@@ -75,7 +79,7 @@ def get_nutrition_data(
 
     servings = (
         _convert_servings_to_number(
-            tokenized_recipe.servings, ServingsStrategy.FEWER_SERVINGS
+            tokenized_recipe.servings, servings_strategy
         )  # TODO pass correct strategy
         if tokenized_recipe.servings
         else None
@@ -91,7 +95,6 @@ def _convert_servings_to_number(
         case 1:
             return int(found_numbers[0])
         case 2:
-            # TODO find if servings create a range
             numbers_range = re.search(_RANGE_OF_NUMBERS_REGEX, tokenized_servings)
             if numbers_range:
                 fewer_portions, more_portions = (
@@ -102,5 +105,5 @@ def _convert_servings_to_number(
                     if servings_strategy is ServingsStrategy.FEWER_SERVINGS
                     else more_portions
                 )
-
-    raise TooManyNumbersDetectedException
+        case _:
+            raise TooManyNumbersDetectedException

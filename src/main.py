@@ -1,6 +1,7 @@
 import logging
 
 from src.data_gathering import prepare_nutrition_report
+from src.models.servings import ServingsStrategy
 
 logging.basicConfig(
     encoding="utf-8",
@@ -15,7 +16,8 @@ def main():
     # url = "https://www.kwestiasmaku.com/kuchnia_polska/rosol/przepis.html"
     # url = "https://www.kwestiasmaku.com/zielony_srodek/marchewka/makaron_ryzowy_marchewka_tofu/przepis.html"
     url = "https://www.kwestiasmaku.com/pasta/lasagne_bolognese/przepis.html"
-    report = prepare_nutrition_report(url)
+    servings_strategy = ServingsStrategy.FEWER_SERVINGS
+    report = prepare_nutrition_report(url, servings_strategy)
     print(report)
 
 
