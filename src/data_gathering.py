@@ -81,5 +81,5 @@ def _convert_servings_to_number(tokenized_servings: str) -> int:
     found_numbers = re.findall(r"\d+", tokenized_servings)
     if found_numbers and len(found_numbers) == 1:
         return int(found_numbers[0])
-    # TODO BUG 6-8 porcji: https://www.kwestiasmaku.com/pasta/lasagne_bolognese/przepis.html
+    # TODO #14 - BUG 6-8 porcji: https://www.kwestiasmaku.com/pasta/lasagne_bolognese/przepis.html
     raise TooManyNumbersDetectedException

@@ -5,13 +5,6 @@ from translate import Translator
 
 from src.models.recipe import Recipe, TokenizedRecipe
 
-# TODO needs to:
-#  - from list of ingredients,
-#  extract actual ingredients (sometimes there are few per entry)
-#  - from element in the list, extract information about the actual food
-#  - extract information about a portion
-#  should NLP be used??
-
 _POLISH_LOCALE = "pl"
 _ENGLISH_LOCALE = "en"
 
