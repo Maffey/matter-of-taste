@@ -1,6 +1,6 @@
 import pytest
 
-from src.data_gathering import _convert_servings_to_number
+from src.recipe_components.data_gathering import _convert_servings_to_number
 from src.models.servings import ServingsStrategy
 
 
@@ -10,7 +10,6 @@ from src.models.servings import ServingsStrategy
         ("Serves 4", 4, None),
         ("Serves 6-8", 6, ServingsStrategy.FEWER_SERVINGS),
         ("Serves 6-8", 8, ServingsStrategy.MORE_SERVINGS),
-        # TODO case to cover: portions as words?
     ],
 )
 def test_convert_servings_to_number(

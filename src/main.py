@@ -1,6 +1,7 @@
 import logging
+from argparse import ArgumentParser
 
-from src.data_gathering import prepare_nutrition_report
+from src.recipe_components.data_gathering import prepare_nutrition_report
 from src.models.servings import ServingsStrategy
 
 logging.basicConfig(
@@ -9,6 +10,11 @@ logging.basicConfig(
     format="%(asctime)s [%(levelname)s] - %(name)s : %(message)s",
 )
 main_logger = logging.getLogger(__name__)
+
+
+def _get_configured_parser() -> ArgumentParser:
+    parser = ArgumentParser()
+    parser.add_argument("url", type=str, help="URL of the recipe on Kwestia Smaku.")
 
 
 def main():

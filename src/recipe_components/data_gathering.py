@@ -3,13 +3,16 @@ import re
 import time
 from typing import Optional
 
-from src.calories_calculator import CaloriesCalculator
+from src.recipe_components.calories_calculator import CaloriesCalculator
 from src.models.nutrition_report import NutritionReport
 from src.models.nutrition_result import NutritionInformation, get_empty_nutrition_result
 from src.models.recipe import TokenizedRecipe
 from src.models.servings import ServingsStrategy
-from src.recipe_scraper import RecipeScraper
-from src.recipe_translator import translate_recipe_to_english, tokenize_recipe
+from src.recipe_components.recipe_scraper import RecipeScraper
+from src.recipe_components.recipe_translator import (
+    translate_recipe_to_english,
+    tokenize_recipe,
+)
 
 process_logger = logging.getLogger(__name__)
 
@@ -78,9 +81,7 @@ def get_nutrition_data(
         time.sleep(_API_CALLS_DELAY)
 
     servings = (
-        _convert_servings_to_number(
-            tokenized_recipe.servings, servings_strategy
-        )  # TODO pass correct strategy
+        _convert_servings_to_number(tokenized_recipe.servings, servings_strategy)
         if tokenized_recipe.servings
         else None
     )
