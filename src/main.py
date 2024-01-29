@@ -1,6 +1,8 @@
 import logging
 
 import typer
+from rich import print
+from typing_extensions import Annotated
 
 from src.models.servings import ServingsStrategy
 from src.recipe_components.data_gathering import prepare_nutrition_report
@@ -13,7 +15,20 @@ logging.basicConfig(
 main_logger = logging.getLogger(__name__)
 
 
-def main(url: str, more_servings: bool = False) -> None:
+def main(
+    url: Annotated[str, typer.Argument(help="URL of the recipe on Kwestia Smaku.")],
+    more_servings: Annotated[
+        bool,
+        typer.Argument(
+            help="Request more servings of the recipe, if the recipe contains a range of servings. By default, fewer servings are requested."
+        ),
+    ] = False,
+) -> None:
+    """
+    Run matter-of-taste.
+    Matter-of-taste scraps recipe from Kwestia Smaku website
+    and calculates calories and other nutrition information for the whole recipe.
+    """
     # TODO ship it as standalone script somehow
     # url = "https://www.kwestiasmaku.com/dania_dla_dwojga/kanapki/kanapka_klubowa/przepis.html"
     # url = "https://www.kwestiasmaku.com/kuchnia_polska/rosol/przepis.html"
@@ -25,7 +40,7 @@ def main(url: str, more_servings: bool = False) -> None:
     else:
         report = prepare_nutrition_report(url, ServingsStrategy.FEWER_SERVINGS)
 
-    print(report)
+    print(f"[blue]{report}[/blue]")
 
 
 if __name__ == "__main__":
