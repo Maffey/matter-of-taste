@@ -27,7 +27,9 @@ def main(
     more_servings: Annotated[
         bool,
         typer.Option(
-            help="Request more servings of the recipe, if the recipe contains a range of servings. By default, fewer servings are requested."
+            help="Request more servings of the recipe, "
+            "if the recipe contains a range of servings. "
+            "By default, fewer servings are requested."
         ),
     ] = False,
 ) -> None:
