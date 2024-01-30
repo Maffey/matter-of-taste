@@ -6,6 +6,7 @@ from typing_extensions import Annotated
 
 from src.models.servings import ServingsStrategy
 from src.recipe_components.data_gathering import prepare_nutrition_report
+from src.user_interface.arguments_parsing import _validate_matter_of_taste_url_regex
 
 logging.basicConfig(
     encoding="utf-8",
@@ -16,10 +17,16 @@ main_logger = logging.getLogger(__name__)
 
 
 def main(
-    url: Annotated[str, typer.Argument(help="URL of the recipe on Kwestia Smaku.")],
+    url: Annotated[
+        str,
+        typer.Argument(
+            callback=_validate_matter_of_taste_url_regex,
+            help="URL of the recipe on Kwestia Smaku.",
+        ),
+    ],
     more_servings: Annotated[
         bool,
-        typer.Argument(
+        typer.Option(
             help="Request more servings of the recipe, if the recipe contains a range of servings. By default, fewer servings are requested."
         ),
     ] = False,
