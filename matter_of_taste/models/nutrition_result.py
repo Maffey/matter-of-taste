@@ -10,6 +10,16 @@ class NutritionInformation:
     fat_total_g: float
     protein_g: float
 
+    def __str__(self):
+        return (
+            f"Name: {self.name}\n"
+            f"Calories: {self.calories} kcal\n"
+            f"Carbohydrates: {self.carbohydrates_total_g} g\n"
+            f"Sugar: {self.sugar_g} g\n"
+            f"Fat: {self.fat_total_g} g\n"
+            f"Protein: {self.protein_g} g"
+        )
+
     def __add__(self, other: "NutritionInformation") -> "NutritionInformation":
         return NutritionInformation(
             name="sum",
