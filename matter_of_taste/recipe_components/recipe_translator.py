@@ -7,7 +7,6 @@ from matter_of_taste.models.recipe import Recipe, TokenizedRecipe
 
 nltk.download("punkt")
 nltk.download("stopwords")
-nltk.download("corpus")
 
 _POLISH_LOCALE = "pl"
 _ENGLISH_LOCALE = "en"
