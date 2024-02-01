@@ -1,7 +1,7 @@
 import pytest
 
-from src.recipe_components.data_gathering import _convert_servings_to_number
-from src.models.servings import ServingsStrategy
+from matter_of_taste.recipe_components.data_gathering import _convert_servings_to_number
+from matter_of_taste.models.servings import ServingsStrategy
 
 
 @pytest.mark.parametrize(

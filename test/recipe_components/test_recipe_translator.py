@@ -1,7 +1,7 @@
 import pytest
 
-from src.models.recipe import Recipe
-from src.recipe_components.recipe_translator import tokenize_recipe
+from matter_of_taste.models.recipe import Recipe
+from matter_of_taste.recipe_components.recipe_translator import tokenize_recipe
 
 
 @pytest.mark.parametrize(

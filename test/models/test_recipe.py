@@ -1,6 +1,6 @@
 import pytest
 
-from src.models.recipe import Recipe
+from matter_of_taste.models.recipe import Recipe
 
 
 @pytest.mark.parametrize(

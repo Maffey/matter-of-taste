@@ -1,4 +1,7 @@
-from src.models.nutrition_result import get_empty_nutrition_result, NutritionInformation
+from matter_of_taste.models.nutrition_result import (
+    get_empty_nutrition_result,
+    NutritionInformation,
+)
 
 
 def test_get_empty_nutrition_result():

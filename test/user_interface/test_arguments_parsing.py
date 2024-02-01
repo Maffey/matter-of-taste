@@ -1,7 +1,9 @@
 import pytest
 import typer
 
-from src.user_interface.arguments_parsing import _validate_matter_of_taste_url_regex
+from matter_of_taste.user_interface.arguments_parsing import (
+    _validate_matter_of_taste_url_regex,
+)
 
 
 @pytest.mark.parametrize(

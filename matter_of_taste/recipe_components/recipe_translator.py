@@ -3,7 +3,7 @@ import string
 import nltk
 from translate import Translator
 
-from src.models.recipe import Recipe, TokenizedRecipe
+from matter_of_taste.models.recipe import Recipe, TokenizedRecipe
 
 nltk.download("punkt")
 nltk.download("stopwords")

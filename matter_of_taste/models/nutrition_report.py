@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 from typing import Optional
 
-from src.models.nutrition_result import NutritionInformation
+from matter_of_taste.models.nutrition_result import NutritionInformation
 
 
 @dataclass

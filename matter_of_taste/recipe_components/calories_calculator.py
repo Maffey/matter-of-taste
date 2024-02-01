@@ -5,7 +5,7 @@ import requests
 from dotenv import load_dotenv, find_dotenv
 from requests import Response
 
-from src.models.nutrition_result import NutritionInformation
+from matter_of_taste.models.nutrition_result import NutritionInformation
 
 load_dotenv(find_dotenv())
 

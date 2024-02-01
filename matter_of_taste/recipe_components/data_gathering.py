@@ -3,13 +3,16 @@ import re
 import time
 from typing import Optional
 
-from src.recipe_components.calories_calculator import CaloriesCalculator
-from src.models.nutrition_report import NutritionReport
-from src.models.nutrition_result import NutritionInformation, get_empty_nutrition_result
-from src.models.recipe import TokenizedRecipe
-from src.models.servings import ServingsStrategy
-from src.recipe_components.recipe_scraper import RecipeScraper
-from src.recipe_components.recipe_translator import (
+from matter_of_taste.recipe_components.calories_calculator import CaloriesCalculator
+from matter_of_taste.models.nutrition_report import NutritionReport
+from matter_of_taste.models.nutrition_result import (
+    NutritionInformation,
+    get_empty_nutrition_result,
+)
+from matter_of_taste.models.recipe import TokenizedRecipe
+from matter_of_taste.models.servings import ServingsStrategy
+from matter_of_taste.recipe_components.recipe_scraper import RecipeScraper
+from matter_of_taste.recipe_components.recipe_translator import (
     translate_recipe_to_english,
     tokenize_recipe,
 )

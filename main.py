@@ -4,9 +4,11 @@ import typer
 from rich import print
 from typing_extensions import Annotated
 
-from src.models.servings import ServingsStrategy
-from src.recipe_components.data_gathering import prepare_nutrition_report
-from src.user_interface.arguments_parsing import _validate_matter_of_taste_url_regex
+from matter_of_taste.models.servings import ServingsStrategy
+from matter_of_taste.recipe_components.data_gathering import prepare_nutrition_report
+from matter_of_taste.user_interface.arguments_parsing import (
+    _validate_matter_of_taste_url_regex,
+)
 
 logging.basicConfig(
     encoding="utf-8",
