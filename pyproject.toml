@@ -7,6 +7,7 @@ license = "MIT"
 readme = "README.md"
 packages = [{include = "matter_of_taste"}]
 
+# TODO Not up to date as poetry isn't used. Update.
 [tool.poetry.dependencies]
 python = "^3.10"
 requests = "^2.31.0"
