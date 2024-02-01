@@ -43,7 +43,6 @@ def main(
     Matter-of-taste scraps recipe from Kwestia Smaku website
     and calculates calories and other nutrition information for the whole recipe.
     """
-    # TODO ship it as standalone script somehow
     # url = "https://www.kwestiasmaku.com/dania_dla_dwojga/kanapki/kanapka_klubowa/przepis.html"
     # url = "https://www.kwestiasmaku.com/kuchnia_polska/rosol/przepis.html"
     # url = "https://www.kwestiasmaku.com/zielony_srodek/marchewka/makaron_ryzowy_marchewka_tofu/przepis.html"
