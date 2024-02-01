@@ -17,7 +17,10 @@ logging.basicConfig(
 )
 main_logger = logging.getLogger(__name__)
 
+app = typer.Typer()
 
+
+@app.command()
 def main(
     url: Annotated[
         str,
@@ -55,4 +58,4 @@ def main(
 
 
 if __name__ == "__main__":
-    typer.run(main)
+    app()

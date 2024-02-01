@@ -6,7 +6,7 @@ setup(
     packages=find_packages(),
     entry_points={
         "console_scripts": [
-            "matter-of-taste = main:run",
+            "matter-of-taste = matter_of_taste.main:app",
         ],
     },
 )
