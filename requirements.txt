@@ -3,8 +3,7 @@ bs4
 lxml
 pytest
 translate
-black
-flake8
+ruff
 nltk
 python-dotenv
 dacite
