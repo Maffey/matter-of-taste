@@ -1,11 +1,13 @@
 import logging
 
 import typer
-from rich import print
 from typing_extensions import Annotated
 
 from matter_of_taste.models.servings import ServingsStrategy
 from matter_of_taste.recipe_components.data_gathering import prepare_nutrition_report
+from matter_of_taste.report_generators.stdout_report_generator import (
+    StdoutReportGenerator,
+)
 from matter_of_taste.user_interface.arguments_parsing import (
     _validate_matter_of_taste_url_regex,
 )
@@ -49,11 +51,13 @@ def main(
     # url = "https://www.kwestiasmaku.com/pasta/lasagne_bolognese/przepis.html"
 
     if more_servings:
-        report = prepare_nutrition_report(url, ServingsStrategy.MORE_SERVINGS)
+        nutrition_report = prepare_nutrition_report(url, ServingsStrategy.MORE_SERVINGS)
     else:
-        report = prepare_nutrition_report(url, ServingsStrategy.FEWER_SERVINGS)
+        nutrition_report = prepare_nutrition_report(
+            url, ServingsStrategy.FEWER_SERVINGS
+        )
 
-    print(f"[blue]{report}[/blue]")
+    StdoutReportGenerator(nutrition_report).generate()
 
 
 if __name__ == "__main__":
