@@ -5,9 +5,11 @@ from typing_extensions import Annotated
 
 from matter_of_taste.models.servings import ServingsStrategy
 from matter_of_taste.recipe_components.data_gathering import prepare_nutrition_report
-from matter_of_taste.report_generators.csv_report_generator import CsvReportGenerator
+from matter_of_taste.report_generators.cli_table_report_generator import (
+    CliTableReportGenerator,
+)
 from matter_of_taste.user_interface.arguments_parsing import (
-    _validate_matter_of_taste_url_regex,
+    validate_matter_of_taste_url_regex,
 )
 
 logging.basicConfig(
@@ -25,7 +27,7 @@ def main(
     url: Annotated[
         str,
         typer.Argument(
-            callback=_validate_matter_of_taste_url_regex,
+            callback=validate_matter_of_taste_url_regex,
             help="URL of the recipe on Kwestia Smaku.",
         ),
     ],
@@ -57,7 +59,8 @@ def main(
         )
 
     # StdoutReportGenerator(nutrition_report).generate()
-    CsvReportGenerator(nutrition_report).generate()
+    # CsvReportGenerator(nutrition_report).generate()
+    CliTableReportGenerator(nutrition_report).generate()
 
 
 if __name__ == "__main__":

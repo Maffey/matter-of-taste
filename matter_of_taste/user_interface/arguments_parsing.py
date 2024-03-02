@@ -8,7 +8,7 @@ _MATTER_OF_TEST_URL_REGEX = re.compile(
 )
 
 
-def _validate_matter_of_taste_url_regex(url: str) -> str:
+def validate_matter_of_taste_url_regex(url: str) -> str:
     if not _MATTER_OF_TEST_URL_REGEX.match(url):
         raise typer.BadParameter("Not a valid Kwestia Smaku URL.")
     return url

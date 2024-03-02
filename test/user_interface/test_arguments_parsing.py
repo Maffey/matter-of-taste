@@ -2,7 +2,7 @@ import pytest
 import typer
 
 from matter_of_taste.user_interface.arguments_parsing import (
-    _validate_matter_of_taste_url_regex,
+    validate_matter_of_taste_url_regex,
 )
 
 
@@ -14,7 +14,7 @@ from matter_of_taste.user_interface.arguments_parsing import (
     ),
 )
 def test_validate_matter_of_taste_url_regex_passes(url):
-    _validate_matter_of_taste_url_regex(url)
+    validate_matter_of_taste_url_regex(url)
 
 
 @pytest.mark.parametrize(
@@ -22,4 +22,4 @@ def test_validate_matter_of_taste_url_regex_passes(url):
 )
 def test_validate_matter_of_taste_url_regex_fails(url):
     with pytest.raises(typer.BadParameter):
-        _validate_matter_of_taste_url_regex(url)
+        validate_matter_of_taste_url_regex(url)
