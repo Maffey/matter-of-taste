@@ -139,3 +139,6 @@ output/
 
 # Let's ignore lock for now
 poetry.lock
+
+# Generated files
+report.csv

@@ -5,9 +5,7 @@ from typing_extensions import Annotated
 
 from matter_of_taste.models.servings import ServingsStrategy
 from matter_of_taste.recipe_components.data_gathering import prepare_nutrition_report
-from matter_of_taste.report_generators.stdout_report_generator import (
-    StdoutReportGenerator,
-)
+from matter_of_taste.report_generators.csv_report_generator import CsvReportGenerator
 from matter_of_taste.user_interface.arguments_parsing import (
     _validate_matter_of_taste_url_regex,
 )
@@ -39,6 +37,7 @@ def main(
             "By default, fewer servings are requested."
         ),
     ] = False,
+    # TODO add generate report flag
 ) -> None:
     """
     Run matter-of-taste.
@@ -57,7 +56,8 @@ def main(
             url, ServingsStrategy.FEWER_SERVINGS
         )
 
-    StdoutReportGenerator(nutrition_report).generate()
+    # StdoutReportGenerator(nutrition_report).generate()
+    CsvReportGenerator(nutrition_report).generate()
 
 
 if __name__ == "__main__":
